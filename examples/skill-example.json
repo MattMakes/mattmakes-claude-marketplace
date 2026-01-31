@@ -1,0 +1,13 @@
+{
+  "name": "example-skill",
+  "version": "1.0.0",
+  "description": "Example skill package with a Python class template",
+  "type": "skill",
+  "tags": ["example", "template", "python", "class"],
+  "author": "MattMakes",
+  "license": "MIT",
+  "repository": "https://github.com/MattMakes/mattmakes-claude-marketplace",
+  "files": {
+    "skills/python-class-template.py": "\"\"\"Example Python Class Template\n\nThis is a skill package that provides a reusable class template\nfollowing Python best practices.\n\nUsage:\n    Copy this template and customize for your needs.\n    \nExample:\n    obj = ExampleClass('my-data')\n    result = obj.process()\n\"\"\"\n\nfrom typing import Any, Optional\n\n\nclass ExampleClass:\n    \"\"\"Example class demonstrating best practices.\n    \n    This class template includes:\n    - Type hints\n    - Docstrings\n    - Property decorators\n    - Error handling\n    - String representation\n    \"\"\"\n    \n    def __init__(self, data: Any, name: Optional[str] = None):\n        \"\"\"Initialize the example class.\n        \n        Args:\n            data: The data to process\n            name: Optional name for the instance\n        \"\"\"\n        self._data = data\n        self._name = name or 'unnamed'\n        self._processed = False\n    \n    @property\n    def data(self) -> Any:\n        \"\"\"Get the data.\"\"\"\n        return self._data\n    \n    @property\n    def name(self) -> str:\n        \"\"\"Get the name.\"\"\"\n        return self._name\n    \n    def process(self) -> dict:\n        \"\"\"Process the data.\n        \n        Returns:\n            dict: Processed result\n            \n        Raises:\n            ValueError: If data is None\n        \"\"\"\n        if self._data is None:\n            raise ValueError('Cannot process None data')\n        \n        self._processed = True\n        return {\n            'name': self._name,\n            'data': self._data,\n            'status': 'processed'\n        }\n    \n    def __repr__(self) -> str:\n        \"\"\"String representation.\"\"\"\n        return f'ExampleClass(name={self._name}, processed={self._processed})'\n    \n    def __str__(self) -> str:\n        \"\"\"User-friendly string representation.\"\"\"\n        status = 'processed' if self._processed else 'unprocessed'\n        return f'{self._name}: {status}'\n"
+  }
+}

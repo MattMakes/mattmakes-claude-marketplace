@@ -1,0 +1,13 @@
+{
+  "name": "example-command",
+  "version": "1.0.0",
+  "description": "Example command package showing best practices",
+  "type": "command",
+  "tags": ["example", "template", "demo"],
+  "author": "MattMakes",
+  "license": "MIT",
+  "repository": "https://github.com/MattMakes/mattmakes-claude-marketplace",
+  "files": {
+    "commands/example-command.sh": "#!/bin/bash\n# Example Command\n# Usage: example-command.sh [name]\n#\n# This is a simple example command that demonstrates\n# how to create a command package for the marketplace.\n\nNAME=${1:-World}\n\necho \"================================================\"\necho \"  Example Command from Claude Marketplace\"\necho \"================================================\"\necho \"\"\necho \"Hello, $NAME!\"\necho \"\"\necho \"This command was installed from the Claude Code Marketplace.\"\necho \"You can create your own commands and share them with others!\"\necho \"\"\necho \"Visit: https://github.com/MattMakes/mattmakes-claude-marketplace\"\necho \"================================================\"\n"
+  }
+}
