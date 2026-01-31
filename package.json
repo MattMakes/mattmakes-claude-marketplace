@@ -1,0 +1,28 @@
+{
+  "name": "claude-marketplace",
+  "version": "1.0.0",
+  "description": "Claude Code marketplace for installing commands, skills, agents, hooks, and other configurations",
+  "type": "module",
+  "main": "src/index.js",
+  "bin": {
+    "claude-marketplace": "./src/cli.js"
+  },
+  "scripts": {
+    "test": "node --test",
+    "start": "node src/cli.js"
+  },
+  "keywords": [
+    "claude",
+    "marketplace",
+    "cli",
+    "commands",
+    "skills",
+    "agents",
+    "hooks"
+  ],
+  "author": "MattMakes",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

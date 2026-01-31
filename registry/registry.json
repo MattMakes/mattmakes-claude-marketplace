@@ -1,0 +1,70 @@
+{
+  "version": "1.0.0",
+  "packages": [
+    {
+      "name": "git-commit-wizard",
+      "version": "1.0.0",
+      "description": "Interactive git commit message wizard with conventional commits support",
+      "type": "command",
+      "tags": ["git", "commit", "workflow"],
+      "author": "MattMakes",
+      "license": "MIT",
+      "files": {
+        "commands/git-commit-wizard.sh": "#!/bin/bash\n# Git commit wizard\necho 'Git Commit Wizard'\necho 'Select commit type:'\nselect type in feat fix docs style refactor test chore; do\n  echo \"Type: $type\"\n  read -p 'Scope (optional): ' scope\n  read -p 'Short description: ' desc\n  read -p 'Long description (optional): ' long\n  \n  if [ -n \"$scope\" ]; then\n    msg=\"$type($scope): $desc\"\n  else\n    msg=\"$type: $desc\"\n  fi\n  \n  if [ -n \"$long\" ]; then\n    git commit -m \"$msg\" -m \"$long\"\n  else\n    git commit -m \"$msg\"\n  fi\n  break\ndone"
+      }
+    },
+    {
+      "name": "python-fastapi-skill",
+      "version": "1.0.0",
+      "description": "FastAPI REST endpoint skill with CRUD operations template",
+      "type": "skill",
+      "tags": ["python", "fastapi", "api", "rest"],
+      "author": "MattMakes",
+      "license": "MIT",
+      "files": {
+        "skills/fastapi-crud.py": "from fastapi import FastAPI, HTTPException\nfrom pydantic import BaseModel\nfrom typing import List, Optional\n\napp = FastAPI()\n\n# Data model\nclass Item(BaseModel):\n    id: Optional[int] = None\n    name: str\n    description: Optional[str] = None\n\n# In-memory storage\nitems_db = []\nitem_id_counter = 1\n\n@app.post(\"/items/\", response_model=Item)\ndef create_item(item: Item):\n    global item_id_counter\n    item.id = item_id_counter\n    item_id_counter += 1\n    items_db.append(item)\n    return item\n\n@app.get(\"/items/\", response_model=List[Item])\ndef read_items():\n    return items_db\n\n@app.get(\"/items/{item_id}\", response_model=Item)\ndef read_item(item_id: int):\n    for item in items_db:\n        if item.id == item_id:\n            return item\n    raise HTTPException(status_code=404, detail=\"Item not found\")\n\n@app.put(\"/items/{item_id}\", response_model=Item)\ndef update_item(item_id: int, updated_item: Item):\n    for idx, item in enumerate(items_db):\n        if item.id == item_id:\n            updated_item.id = item_id\n            items_db[idx] = updated_item\n            return updated_item\n    raise HTTPException(status_code=404, detail=\"Item not found\")\n\n@app.delete(\"/items/{item_id}\")\ndef delete_item(item_id: int):\n    for idx, item in enumerate(items_db):\n        if item.id == item_id:\n            items_db.pop(idx)\n            return {\"message\": \"Item deleted\"}\n    raise HTTPException(status_code=404, detail=\"Item not found\")"
+      }
+    },
+    {
+      "name": "code-review-agent",
+      "version": "1.0.0",
+      "description": "AI agent configuration for automated code reviews",
+      "type": "agent",
+      "tags": ["code-review", "ai", "automation"],
+      "author": "MattMakes",
+      "license": "MIT",
+      "metadata": {
+        "model": "claude-3-sonnet",
+        "temperature": 0.3,
+        "max_tokens": 4000
+      },
+      "files": {
+        "agents/code-review-agent.json": "{\n  \"name\": \"code-review-agent\",\n  \"description\": \"Performs thorough code reviews with focus on best practices, security, and maintainability\",\n  \"model\": \"claude-3-sonnet\",\n  \"temperature\": 0.3,\n  \"system_prompt\": \"You are an expert code reviewer. Review code for:\\n1. Security vulnerabilities\\n2. Performance issues\\n3. Code quality and maintainability\\n4. Best practices\\n5. Potential bugs\\n\\nProvide constructive feedback with specific suggestions for improvement.\",\n  \"tools\": [\"file_reader\", \"git_diff\"],\n  \"max_tokens\": 4000\n}"
+      }
+    },
+    {
+      "name": "pre-commit-linter",
+      "version": "1.0.0",
+      "description": "Pre-commit hook that runs linters and formatters",
+      "type": "hook",
+      "tags": ["git", "linting", "formatting", "pre-commit"],
+      "author": "MattMakes",
+      "license": "MIT",
+      "files": {
+        "hooks/pre-commit": "#!/bin/bash\n# Pre-commit hook for linting and formatting\n\necho \"Running pre-commit checks...\"\n\n# Run linters based on file types\nif git diff --cached --name-only | grep -q '\\.js$\\|\\.ts$'; then\n  echo \"Linting JavaScript/TypeScript files...\"\n  # Add your linter command here\n  # Example: npx eslint $(git diff --cached --name-only --diff-filter=ACM | grep '\\.js$\\|\\.ts$')\nfi\n\nif git diff --cached --name-only | grep -q '\\.py$'; then\n  echo \"Linting Python files...\"\n  # Add your linter command here\n  # Example: pylint $(git diff --cached --name-only --diff-filter=ACM | grep '\\.py$')\nfi\n\necho \"Pre-commit checks passed!\"\nexit 0"
+      }
+    },
+    {
+      "name": "vscode-settings",
+      "version": "1.0.0",
+      "description": "VSCode settings optimized for Claude development",
+      "type": "config",
+      "tags": ["vscode", "editor", "settings"],
+      "author": "MattMakes",
+      "license": "MIT",
+      "files": {
+        "config/vscode-settings.json": "{\n  \"editor.formatOnSave\": true,\n  \"editor.codeActionsOnSave\": {\n    \"source.fixAll\": true\n  },\n  \"editor.tabSize\": 2,\n  \"files.trimTrailingWhitespace\": true,\n  \"files.insertFinalNewline\": true,\n  \"editor.rulers\": [80, 120],\n  \"workbench.colorTheme\": \"Default Dark+\",\n  \"git.autofetch\": true,\n  \"git.confirmSync\": false\n}"
+      }
+    }
+  ]
+}
